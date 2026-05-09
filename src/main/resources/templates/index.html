@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Management System</title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f4f4;
+            padding:40px;
+        }
+
+        h1{
+            color:#333;
+            margin-bottom:20px;
+        }
+
+        input{
+            padding:10px;
+            margin:5px;
+            width:220px;
+            border:1px solid gray;
+            border-radius:5px;
+        }
+
+        button{
+            padding:10px 20px;
+            background:blue;
+            color:white;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:darkblue;
+        }
+
+        table{
+            width:100%;
+            margin-top:30px;
+            border-collapse:collapse;
+            background:white;
+        }
+
+        table, th, td{
+            border:1px solid gray;
+        }
+
+        th{
+            background:#333;
+            color:white;
+        }
+
+        th, td{
+            padding:12px;
+            text-align:center;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<h1>Employee Management System</h1>
+
+<input type="text" id="name" placeholder="Enter Name">
+
+<input type="text" id="department" placeholder="Enter Department">
+
+<input type="number" id="salary" placeholder="Enter Salary">
+
+<button onclick="addEmployee()">Add Employee</button>
+
+<table>
+
+    <thead>
+
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Salary</th>
+    </tr>
+
+    </thead>
+
+    <tbody id="employeeTable"></tbody>
+
+</table>
+
+<script>
+
+    async function loadEmployees(){
+
+        const response = await fetch('/employees');
+
+        const employees = await response.json();
+
+        let table = "";
+
+        employees.forEach(emp => {
+
+            table += `
+                <tr>
+                    <td>${emp.id}</td>
+                    <td>${emp.name}</td>
+                    <td>${emp.department}</td>
+                    <td>${emp.salary}</td>
+                </tr>
+            `;
+        });
+
+        document.getElementById("employeeTable").innerHTML = table;
+    }
+
+    async function addEmployee(){
+
+        const employee = {
+
+            name: document.getElementById("name").value,
+
+            department: document.getElementById("department").value,
+
+            salary: document.getElementById("salary").value
+        };
+
+        await fetch('/employees', {
+
+            method:'POST',
+
+            headers:{
+                'Content-Type':'application/json'
+            },
+
+            body: JSON.stringify(employee)
+        });
+
+        document.getElementById("name").value = "";
+        document.getElementById("department").value = "";
+        document.getElementById("salary").value = "";
+
+        loadEmployees();
+    }
+
+    loadEmployees();
+
+</script>
+
+</body>
+</html>
