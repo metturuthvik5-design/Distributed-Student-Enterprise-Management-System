@@ -37,6 +37,7 @@
             border:none;
             border-radius:5px;
             cursor:pointer;
+            margin:2px;
         }
 
         button:hover{
@@ -89,6 +90,7 @@
         <th>Name</th>
         <th>Department</th>
         <th>Salary</th>
+        <th>Action</th>
     </tr>
 
     </thead>
@@ -111,10 +113,32 @@
 
             table += `
                 <tr>
+
                     <td>${emp.id}</td>
+
                     <td>${emp.name}</td>
+
                     <td>${emp.department}</td>
+
                     <td>${emp.salary}</td>
+
+                    <td>
+
+                        <button onclick="editEmployee(
+                            ${emp.id},
+                            '${emp.name}',
+                            '${emp.department}',
+                            ${emp.salary}
+                        )">
+                            Edit
+                        </button>
+
+                        <button onclick="deleteEmployee(${emp.id})">
+                            Delete
+                        </button>
+
+                    </td>
+
                 </tr>
             `;
         });
@@ -147,6 +171,45 @@
         document.getElementById("name").value = "";
         document.getElementById("department").value = "";
         document.getElementById("salary").value = "";
+
+        loadEmployees();
+    }
+
+    async function deleteEmployee(id){
+
+        await fetch(`/employees/${id}`, {
+
+            method:'DELETE'
+        });
+
+        loadEmployees();
+    }
+
+    async function editEmployee(id, oldName, oldDepartment, oldSalary){
+
+        const name = prompt("Enter New Name", oldName);
+
+        const department = prompt("Enter New Department", oldDepartment);
+
+        const salary = prompt("Enter New Salary", oldSalary);
+
+        const updatedEmployee = {
+
+            name:name,
+            department:department,
+            salary:salary
+        };
+
+        await fetch(`/employees/${id}`, {
+
+            method:'PUT',
+
+            headers:{
+                'Content-Type':'application/json'
+            },
+
+            body: JSON.stringify(updatedEmployee)
+        });
 
         loadEmployees();
     }
