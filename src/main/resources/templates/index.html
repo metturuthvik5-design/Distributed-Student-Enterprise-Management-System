@@ -1,96 +1,231 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Employee Management System</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
     <style>
 
         body{
-            font-family: Arial, sans-serif;
             background:#f4f4f4;
-            padding:40px;
         }
 
         h1{
             color:#333;
-            margin-bottom:20px;
+            font-weight:bold;
         }
 
-        input{
-            padding:10px;
-            margin:5px;
-            width:220px;
-            border:1px solid gray;
-            border-radius:5px;
-        }
-
-        button{
-            padding:10px 20px;
-            background:blue;
-            color:white;
-            border:none;
-            border-radius:5px;
-            cursor:pointer;
-            margin:2px;
-        }
-
-        button:hover{
-            background:darkblue;
-        }
-
-        table{
-            width:100%;
-            margin-top:30px;
-            border-collapse:collapse;
+        .table{
             background:white;
         }
 
-        table, th, td{
-            border:1px solid gray;
-        }
-
-        th{
-            background:#333;
-            color:white;
-        }
-
-        th, td{
-            padding:12px;
-            text-align:center;
+        .card{
+            border:none;
+            border-radius:10px;
         }
 
     </style>
 
 </head>
 
-<body>
+<body class="container mt-5">
 
-<h1>Employee Management System</h1>
+<h1 class="text-center mb-4">
+    Employee Management System
+</h1>
 
-<input type="text" id="name" placeholder="Enter Name">
+<div class="text-end mb-3">
 
-<input type="text" id="department" placeholder="Enter Department">
+    <a href="/logout"
+       class="btn btn-danger">
 
-<input type="number" id="salary" placeholder="Enter Salary">
+        Logout
 
-<button onclick="addEmployee()">Add Employee</button>
+    </a>
 
-<table>
+</div>
 
-    <thead>
+<!-- DASHBOARD CARDS -->
+
+<div class="row mb-4">
+
+    <div class="col-md-4">
+
+        <div class="card shadow text-center">
+
+            <div class="card-body">
+
+                <h5>Total Employees</h5>
+
+                <h2 id="totalEmployees">0</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card shadow text-center">
+
+            <div class="card-body">
+
+                <h5>Highest Salary</h5>
+
+                <h2 id="highestSalary">0</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card shadow text-center">
+
+            <div class="card-body">
+
+                <h5>Total Departments</h5>
+
+                <h2 id="totalDepartments">0</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- INPUTS -->
+
+<div class="row">
+
+    <div class="col-md-3">
+
+        <input type="text"
+               id="name"
+               class="form-control mb-2"
+               placeholder="Enter Name">
+
+    </div>
+
+    <div class="col-md-3">
+
+        <input type="text"
+               id="department"
+               class="form-control mb-2"
+               placeholder="Enter Department">
+
+    </div>
+
+    <div class="col-md-3">
+
+        <input type="number"
+               id="salary"
+               class="form-control mb-2"
+               placeholder="Enter Salary">
+
+    </div>
+
+    <div class="col-md-3">
+
+        <input type="text"
+               id="search"
+               class="form-control mb-2"
+               placeholder="Search Employee"
+               onkeyup="searchEmployee()">
+
+        <!-- SORTING -->
+
+        <select id="sortBy"
+                class="form-select mb-2"
+                onchange="loadEmployees()">
+
+            <option value="id">
+                Sort By ID
+            </option>
+
+            <option value="name">
+                Sort By Name
+            </option>
+
+            <option value="salary">
+                Sort By Salary
+            </option>
+
+            <option value="department">
+                Sort By Department
+            </option>
+
+        </select>
+
+    </div>
+
+</div>
+
+<!-- ADMIN BUTTONS -->
+
+<div sec:authorize="hasRole('ADMIN')"
+     class="mb-3">
+
+    <button class="btn btn-primary"
+            onclick="addEmployee()">
+
+        Add Employee
+
+    </button>
+
+    <a href="/employees/export"
+       class="btn btn-success ms-2">
+
+        Export Excel
+
+    </a>
+
+    <a href="/employees/pdf"
+       class="btn btn-dark ms-2">
+
+        Export PDF
+
+    </a>
+
+</div>
+
+<!-- TABLE -->
+
+<table class="table table-bordered
+              table-striped
+              table-hover">
+
+    <thead class="table-dark">
 
     <tr>
+
         <th>ID</th>
+
         <th>Name</th>
+
         <th>Department</th>
+
         <th>Salary</th>
+
         <th>Action</th>
+
     </tr>
 
     </thead>
@@ -99,13 +234,45 @@
 
 </table>
 
+<!-- PAGINATION -->
+
+<div class="d-flex justify-content-center mt-3">
+
+    <button class="btn btn-secondary me-2"
+            onclick="previousPage()">
+
+        Previous
+
+    </button>
+
+    <button class="btn btn-secondary"
+            onclick="nextPage()">
+
+        Next
+
+    </button>
+
+</div>
+
 <script>
+
+    let currentPage = 0;
+
+    const pageSize = 5;
 
     async function loadEmployees(){
 
-        const response = await fetch('/employees');
+        const sortBy =
+            document.getElementById("sortBy").value;
 
-        const employees = await response.json();
+        const response =
+            await fetch(
+                `/employees?page=${currentPage}&size=${pageSize}&sortBy=${sortBy}`
+            );
+
+        const data = await response.json();
+
+        const employees = data.content;
 
         let table = "";
 
@@ -124,17 +291,23 @@
 
                     <td>
 
-                        <button onclick="editEmployee(
-                            ${emp.id},
-                            '${emp.name}',
-                            '${emp.department}',
-                            ${emp.salary}
-                        )">
+                        <button class="btn btn-warning btn-sm"
+                                onclick="editEmployee(
+                                    ${emp.id},
+                                    '${emp.name}',
+                                    '${emp.department}',
+                                    ${emp.salary}
+                                )">
+
                             Edit
+
                         </button>
 
-                        <button onclick="deleteEmployee(${emp.id})">
+                        <button class="btn btn-danger btn-sm"
+                                onclick="deleteEmployee(${emp.id})">
+
                             Delete
+
                         </button>
 
                     </td>
@@ -143,18 +316,51 @@
             `;
         });
 
-        document.getElementById("employeeTable").innerHTML = table;
+        document.getElementById("employeeTable")
+            .innerHTML = table;
+
+        // TOTAL EMPLOYEES
+        document.getElementById("totalEmployees")
+            .innerText = data.totalElements;
+
+        // HIGHEST SALARY
+        let highest = 0;
+
+        employees.forEach(emp => {
+
+            if(emp.salary > highest){
+
+                highest = emp.salary;
+            }
+        });
+
+        document.getElementById("highestSalary")
+            .innerText = highest;
+
+        // TOTAL DEPARTMENTS
+        const departments = new Set();
+
+        employees.forEach(emp => {
+
+            departments.add(emp.department);
+        });
+
+        document.getElementById("totalDepartments")
+            .innerText = departments.size;
     }
 
     async function addEmployee(){
 
         const employee = {
 
-            name: document.getElementById("name").value,
+            name:
+            document.getElementById("name").value,
 
-            department: document.getElementById("department").value,
+            department:
+            document.getElementById("department").value,
 
-            salary: document.getElementById("salary").value
+            salary:
+            document.getElementById("salary").value
         };
 
         await fetch('/employees', {
@@ -169,7 +375,9 @@
         });
 
         document.getElementById("name").value = "";
+
         document.getElementById("department").value = "";
+
         document.getElementById("salary").value = "";
 
         loadEmployees();
@@ -185,18 +393,28 @@
         loadEmployees();
     }
 
-    async function editEmployee(id, oldName, oldDepartment, oldSalary){
+    async function editEmployee(id,
+                                oldName,
+                                oldDepartment,
+                                oldSalary){
 
-        const name = prompt("Enter New Name", oldName);
+        const name =
+            prompt("Enter New Name", oldName);
 
-        const department = prompt("Enter New Department", oldDepartment);
+        const department =
+            prompt("Enter New Department",
+                oldDepartment);
 
-        const salary = prompt("Enter New Salary", oldSalary);
+        const salary =
+            prompt("Enter New Salary",
+                oldSalary);
 
         const updatedEmployee = {
 
             name:name,
+
             department:department,
+
             salary:salary
         };
 
@@ -214,9 +432,55 @@
         loadEmployees();
     }
 
+    function searchEmployee(){
+
+        const input =
+            document.getElementById("search")
+                .value.toLowerCase();
+
+        const rows =
+            document.querySelectorAll(
+                "#employeeTable tr"
+            );
+
+        rows.forEach(row => {
+
+            const name =
+                row.children[1]
+                    .innerText.toLowerCase();
+
+            if(name.includes(input)){
+
+                row.style.display = "";
+
+            } else {
+
+                row.style.display = "none";
+            }
+        });
+    }
+
+    function nextPage(){
+
+        currentPage++;
+
+        loadEmployees();
+    }
+
+    function previousPage(){
+
+        if(currentPage > 0){
+
+            currentPage--;
+
+            loadEmployees();
+        }
+    }
+
     loadEmployees();
 
 </script>
 
 </body>
+
 </html>
