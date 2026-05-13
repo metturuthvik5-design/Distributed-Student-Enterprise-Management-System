@@ -1,7 +1,3 @@
-# Modern SaaS Dashboard — `index.html`
-
-Replace your current `index.html` with this complete code.
-
 ```html
 <!DOCTYPE html>
 <html lang="en"
@@ -11,7 +7,6 @@ Replace your current `index.html` with this complete code.
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Employee Management System</title>
 
     <!-- Bootstrap -->
@@ -31,265 +26,146 @@ Replace your current `index.html` with this complete code.
     <style>
 
         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #eef2ff, #f8fafc);
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
             min-height: 100vh;
             color: #1e293b;
         }
 
-        .navbar-custom {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.5);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.05);
-        }
-
-        .brand-title {
-            font-weight: 700;
-            font-size: 1.3rem;
-            color: #2563eb;
-        }
-
         .dashboard-title {
-            font-size: 2rem;
+            font-size: 58px;
             font-weight: 700;
-            margin-bottom: 8px;
+            color: #0f172a;
+            margin-bottom: 10px;
         }
 
         .dashboard-subtitle {
+            font-size: 18px;
             color: #64748b;
-            margin-bottom: 30px;
+            margin-top: 10px;
         }
 
-        .glass-card {
-            background: rgba(255,255,255,0.75);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 25px;
-            box-shadow: 0 10px 40px rgba(15,23,42,0.08);
-            border: 1px solid rgba(255,255,255,0.4);
+        .quote-text {
+            font-size: 20px;
+            color: #475569;
+            margin-top: 12px;
+            margin-bottom: 12px;
+            font-style: italic;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
 
         .stats-card {
-            border-radius: 24px;
-            padding: 24px;
-            color: white;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease;
+            background: rgba(255,255,255,0.9);
+            border-radius: 22px;
+            padding: 35px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: 0.3s ease;
+            border: none;
         }
 
         .stats-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-5px);
         }
 
-        .stats-card i {
-            font-size: 2rem;
-            opacity: 0.85;
+        .stats-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
         }
 
-        .stats-card h2 {
+        .stats-card h1 {
+            font-size: 52px;
             font-weight: 700;
-            margin-top: 12px;
+            color: #2563eb;
         }
 
-        .stats-card p {
-            margin: 0;
-            opacity: 0.9;
+        .glass-box {
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
         }
 
-        .blue-card {
-            background: linear-gradient(135deg, #2563eb, #3b82f6);
-        }
-
-        .green-card {
-            background: linear-gradient(135deg, #059669, #10b981);
-        }
-
-        .purple-card {
-            background: linear-gradient(135deg, #7c3aed, #8b5cf6);
-        }
-
-        .section-title {
-            font-weight: 600;
-            margin-bottom: 18px;
-        }
-
-        .modern-input {
-            border: none;
+        .form-control,
+        .form-select {
             border-radius: 14px;
-            padding: 12px 15px;
-            background: #f8fafc;
-            box-shadow: inset 0 2px 6px rgba(0,0,0,0.03);
+            padding: 14px;
+            border: 1px solid #dbeafe;
         }
 
-        .modern-input:focus {
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(37,99,235,0.15);
-            border: none;
-        }
-
-        .modern-btn {
-            border: none;
-            border-radius: 14px;
-            padding: 11px 18px;
+        .btn {
+            border-radius: 12px;
+            padding: 12px 22px;
             font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .modern-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-primary-custom {
-            background: linear-gradient(135deg, #2563eb, #3b82f6);
-            color: white;
-        }
-
-        .btn-success-custom {
-            background: linear-gradient(135deg, #059669, #10b981);
-            color: white;
-        }
-
-        .btn-dark-custom {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: white;
-        }
-
-        .btn-danger-custom {
-            background: linear-gradient(135deg, #dc2626, #ef4444);
-            color: white;
-        }
-
-        .table-container {
-            overflow-x: auto;
-            border-radius: 22px;
         }
 
         .table {
-            margin-bottom: 0;
-            border-collapse: separate;
-            border-spacing: 0 10px;
-        }
-
-        .table thead th {
-            border: none;
-            color: #64748b;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .table tbody tr {
+            border-radius: 18px;
+            overflow: hidden;
             background: white;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.04);
-            transition: all 0.2s ease;
         }
 
-        .table tbody tr:hover {
-            transform: scale(1.01);
-        }
-
-        .table td {
-            vertical-align: middle;
-            border: none;
-            padding: 18px;
-        }
-
-        .badge-department {
-            background: #e0e7ff;
-            color: #4338ca;
-            padding: 8px 14px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .action-btn {
-            border: none;
-            border-radius: 12px;
-            padding: 8px 12px;
-            margin-right: 6px;
+        .table thead {
+            background: #0f172a;
             color: white;
         }
 
-        .edit-btn {
-            background: #f59e0b;
+        .table thead th {
+            padding: 18px;
         }
 
-        .delete-btn {
-            background: #ef4444;
-        }
-
-        .pagination-btn {
-            border: none;
-            background: white;
-            padding: 12px 18px;
-            border-radius: 14px;
-            font-weight: 600;
-            box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+        .table tbody td {
+            padding: 18px;
+            vertical-align: middle;
         }
 
         .logout-btn {
-            border-radius: 14px;
-            padding: 10px 18px;
-            font-weight: 600;
+            float: right;
+        }
+
+        .pagination-btn {
+            margin-top: 20px;
+        }
+
+        @media(max-width:768px){
+
+            .dashboard-title {
+                font-size: 36px;
+            }
+
+            .stats-card {
+                margin-bottom: 20px;
+            }
         }
 
     </style>
-
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-
-<nav class="navbar navbar-expand-lg navbar-custom px-4 py-3 mb-4">
-
-    <div class="container-fluid">
-
-        <span class="brand-title">
-            <i class="fa-solid fa-layer-group me-2"></i>
-            Employee Management System
-        </span>
-
-        <div>
-
-            <a href="/logout"
-               class="btn btn-danger logout-btn">
-
-                <i class="fa-solid fa-right-from-bracket me-2"></i>
-                Logout
-
-            </a>
-
-        </div>
-
-    </div>
-
-</nav>
-
-<div class="container pb-5">
+<div class="container py-5">
 
     <!-- HEADER -->
+    <div class="mb-5 text-center position-relative">
 
-    <div class="mb-4 text-center">
+        <a href="/logout" class="btn btn-danger logout-btn">
+            Logout
+        </a>
 
         <h1 class="dashboard-title">
             Employee Management System
         </h1>
 
-        <p style="
-        font-size: 20px;
-        color: #475569;
-        margin-top: 12px;
-        margin-bottom: 10px;
-        font-style: italic;
-        font-weight: 500;
-        letter-spacing: 0.5px;
-    ">
+        <p class="quote-text">
             “Even clouds have travelled miles away just to drizzle on you.”
         </p>
 
@@ -299,413 +175,128 @@ Replace your current `index.html` with this complete code.
 
     </div>
 
+
     <!-- STATS -->
+    <div class="row g-4 mb-5">
 
-    <div class="row g-4 mb-4">
-
-        <div class="col-lg-4">
-
-            <div class="stats-card blue-card">
-
-                <i class="fa-solid fa-users"></i>
-
-                <h2 id="totalEmployees">0</h2>
-
-                <p>Total Employees</p>
-
+        <div class="col-md-4">
+            <div class="stats-card">
+                <h3>Total Employees</h3>
+                <h1 th:text="${totalEmployees}">0</h1>
             </div>
-
         </div>
 
-        <div class="col-lg-4">
-
-            <div class="stats-card green-card">
-
-                <i class="fa-solid fa-money-bill-trend-up"></i>
-
-                <h2 id="highestSalary">0</h2>
-
-                <p>Highest Salary</p>
-
+        <div class="col-md-4">
+            <div class="stats-card">
+                <h3>Highest Salary</h3>
+                <h1 th:text="${highestSalary}">0</h1>
             </div>
-
         </div>
 
-        <div class="col-lg-4">
-
-            <div class="stats-card purple-card">
-
-                <i class="fa-solid fa-building"></i>
-
-                <h2 id="totalDepartments">0</h2>
-
-                <p>Total Departments</p>
-
+        <div class="col-md-4">
+            <div class="stats-card">
+                <h3>Total Departments</h3>
+                <h1 th:text="${departmentCount}">0</h1>
             </div>
-
         </div>
 
     </div>
 
-    <!-- FORM -->
 
-    <div class="glass-card mb-4">
+    <!-- SEARCH + FORM -->
+    <div class="glass-box mb-5">
 
-        <h5 class="section-title">
-            Add New Employee
-        </h5>
+        <div class="row g-3 mb-4">
 
-        <div class="row g-3">
-
-            <div class="col-lg-3">
-
-                <input type="text"
-                       id="name"
-                       class="form-control modern-input"
-                       placeholder="Employee Name">
-
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Enter Name">
             </div>
 
-            <div class="col-lg-3">
-
-                <input type="text"
-                       id="department"
-                       class="form-control modern-input"
-                       placeholder="Department">
-
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Enter Department">
             </div>
 
-            <div class="col-lg-3">
-
-                <input type="number"
-                       id="salary"
-                       class="form-control modern-input"
-                       placeholder="Salary">
-
+            <div class="col-md-3">
+                <input type="number" class="form-control" placeholder="Enter Salary">
             </div>
 
-            <div class="col-lg-3">
-
-                <button class="modern-btn btn-primary-custom w-100"
-                        onclick="addEmployee()"
-                        sec:authorize="hasRole('ADMIN')">
-
-                    <i class="fa-solid fa-plus me-2"></i>
-                    Add Employee
-
-                </button>
-
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Search Employee">
             </div>
 
         </div>
 
-    </div>
+        <div class="d-flex flex-wrap gap-3 mb-4">
 
-    <!-- ACTIONS -->
+            <button class="btn btn-primary">
+                <i class="fa-solid fa-user-plus"></i>
+                Add Employee
+            </button>
 
-    <div class="glass-card mb-4">
+            <button class="btn btn-success">
+                <i class="fa-solid fa-file-excel"></i>
+                Export Excel
+            </button>
 
-        <div class="row g-3 align-items-center">
-
-            <div class="col-lg-4">
-
-                <input type="text"
-                       id="search"
-                       class="form-control modern-input"
-                       placeholder="Search employee..."
-                       onkeyup="searchEmployee()">
-
-            </div>
-
-            <div class="col-lg-3">
-
-                <select id="sortBy"
-                        class="form-select modern-input"
-                        onchange="loadEmployees()">
-
-                    <option value="id">Sort By ID</option>
-                    <option value="name">Sort By Name</option>
-                    <option value="salary">Sort By Salary</option>
-                    <option value="department">Sort By Department</option>
-
-                </select>
-
-            </div>
-
-            <div class="col-lg-5 text-lg-end"
-                 sec:authorize="hasRole('ADMIN')">
-
-                <a href="/employees/export"
-                   class="modern-btn btn-success-custom text-decoration-none me-2">
-
-                    <i class="fa-solid fa-file-excel me-2"></i>
-                    Export Excel
-
-                </a>
-
-                <a href="/employees/pdf"
-                   class="modern-btn btn-dark-custom text-decoration-none">
-
-                    <i class="fa-solid fa-file-pdf me-2"></i>
-                    Export PDF
-
-                </a>
-
-            </div>
+            <button class="btn btn-dark">
+                <i class="fa-solid fa-file-pdf"></i>
+                Export PDF
+            </button>
 
         </div>
 
-    </div>
 
-    <!-- TABLE -->
+        <!-- TABLE -->
+        <div class="table-responsive">
 
-    <div class="glass-card table-container">
+            <table class="table table-hover align-middle">
 
-        <table class="table align-middle">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Salary</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
 
-            <thead>
+                <tbody>
 
-            <tr>
+                <tr th:each="employee : ${employees}">
+                    <td th:text="${employee.id}"></td>
+                    <td th:text="${employee.name}"></td>
+                    <td th:text="${employee.department}"></td>
+                    <td th:text="${employee.salary}"></td>
 
-                <th>ID</th>
-                <th>Name</th>
-                <th>Department</th>
-                <th>Salary</th>
-                <th>Actions</th>
+                    <td>
+                        <button class="btn btn-warning btn-sm">
+                            Edit
+                        </button>
 
-            </tr>
+                        <button class="btn btn-danger btn-sm">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
 
-            </thead>
+                </tbody>
 
-            <tbody id="employeeTable"></tbody>
+            </table>
 
-        </table>
+        </div>
 
-    </div>
 
-    <!-- PAGINATION -->
-
-    <div class="d-flex justify-content-center gap-3 mt-4">
-
-        <button class="pagination-btn"
-                onclick="previousPage()">
-
-            <i class="fa-solid fa-arrow-left me-2"></i>
-            Previous
-
-        </button>
-
-        <button class="pagination-btn"
-                onclick="nextPage()">
-
-            Next
-            <i class="fa-solid fa-arrow-right ms-2"></i>
-
-        </button>
+        <!-- PAGINATION -->
+        <div class="text-center pagination-btn">
+            <button class="btn btn-secondary">Previous</button>
+            <button class="btn btn-secondary">Next</button>
+        </div>
 
     </div>
 
 </div>
 
-<script>
-
-    let currentPage = 0;
-    const pageSize = 5;
-
-    async function loadEmployees() {
-
-        const sortBy = document.getElementById("sortBy").value;
-
-        const response = await fetch(
-            `/employees?page=${currentPage}&size=${pageSize}&sortBy=${sortBy}`
-        );
-
-        const data = await response.json();
-
-        const employees = data.content;
-
-        let table = "";
-
-        employees.forEach(emp => {
-
-            table += `
-                <tr>
-                    <td>#${emp.id}</td>
-
-                    <td>
-                        <strong>${emp.name}</strong>
-                    </td>
-
-                    <td>
-                        <span class="badge-department">
-                            ${emp.department}
-                        </span>
-                    </td>
-
-                    <td>
-                        <strong>₹ ${emp.salary}</strong>
-                    </td>
-
-                    <td>
-
-                        <button class="action-btn edit-btn"
-                                onclick="editEmployee(
-                                    ${emp.id},
-                                    '${emp.name}',
-                                    '${emp.department}',
-                                    ${emp.salary}
-                                )">
-
-                            <i class="fa-solid fa-pen"></i>
-
-                        </button>
-
-                        <button class="action-btn delete-btn"
-                                onclick="deleteEmployee(${emp.id})">
-
-                            <i class="fa-solid fa-trash"></i>
-
-                        </button>
-
-                    </td>
-
-                </tr>
-            `;
-        });
-
-        document.getElementById("employeeTable").innerHTML = table;
-
-        document.getElementById("totalEmployees").innerText = data.totalElements;
-
-        let highest = 0;
-
-        employees.forEach(emp => {
-
-            if(emp.salary > highest){
-                highest = emp.salary;
-            }
-        });
-
-        document.getElementById("highestSalary").innerText = "₹ " + highest;
-
-        const departments = new Set();
-
-        employees.forEach(emp => {
-            departments.add(emp.department);
-        });
-
-        document.getElementById("totalDepartments").innerText = departments.size;
-    }
-
-    async function addEmployee() {
-
-        const employee = {
-            name: document.getElementById("name").value,
-            department: document.getElementById("department").value,
-            salary: document.getElementById("salary").value
-        };
-
-        await fetch('/employees', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(employee)
-        });
-
-        document.getElementById("name").value = "";
-        document.getElementById("department").value = "";
-        document.getElementById("salary").value = "";
-
-        loadEmployees();
-    }
-
-    async function deleteEmployee(id) {
-
-        await fetch(`/employees/${id}`, {
-            method: 'DELETE'
-        });
-
-        loadEmployees();
-    }
-
-    async function editEmployee(id, oldName, oldDepartment, oldSalary) {
-
-        const name = prompt("Enter New Name", oldName);
-        const department = prompt("Enter New Department", oldDepartment);
-        const salary = prompt("Enter New Salary", oldSalary);
-
-        const updatedEmployee = {
-            name: name,
-            department: department,
-            salary: salary
-        };
-
-        await fetch(`/employees/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedEmployee)
-        });
-
-        loadEmployees();
-    }
-
-    function searchEmployee() {
-
-        const input = document.getElementById("search")
-            .value.toLowerCase();
-
-        const rows = document.querySelectorAll(
-            "#employeeTable tr"
-        );
-
-        rows.forEach(row => {
-
-            const name = row.children[1]
-                .innerText.toLowerCase();
-
-            if(name.includes(input)) {
-                row.style.display = "";
-            }
-            else {
-                row.style.display = "none";
-            }
-        });
-    }
-
-    function nextPage() {
-        currentPage++;
-        loadEmployees();
-    }
-
-    function previousPage() {
-
-        if(currentPage > 0) {
-            currentPage--;
-            loadEmployees();
-        }
-    }
-
-    loadEmployees();
-
-</script>
-
 </body>
 </html>
 ```
-
-After replacing:
-
-1. Save file
-2. Run locally first
-3. If UI works:
-
-```bash
-git add .
-git commit -m "Modern SaaS dashboard UI redesign"
-git push
-```
-
-Render will auto redeploy with the new UI.
